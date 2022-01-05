@@ -20,8 +20,26 @@ public class Library {
         }
     }
 
+    public void removeBook(Book book) {
+        this.books.remove(book);
+    }
+
     public boolean checkSpace() {
         return capacity - this.countBooks() > 0;
+    }
+
+    public void processReturn(Book book, Borrower borrower) {
+        if (this.checkSpace()) {
+            borrower.returnBook(book);
+            this.addBook(book);
+        }
+    }
+
+    public void lendOutBook(Book book, Borrower borrower) {
+        if (this.books.contains(book)) {
+            this.removeBook(book);
+            borrower.borrowBook(book);
+        }
     }
 
 }

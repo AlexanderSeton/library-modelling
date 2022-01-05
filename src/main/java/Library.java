@@ -1,13 +1,30 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Library {
 
     private ArrayList<Book> books;
     private int capacity;
+    private HashMap<String, Integer> booksByGenre;
 
     public Library(int capacity) {
         this.books = new ArrayList<>();
         this.capacity = capacity;
+        this.booksByGenre = new HashMap<>();
+    }
+
+    public void generateHashMap() {
+        HashMap<String, Integer> booksByGenre = new HashMap<>();
+        for (int i=0; i<this.countBooks(); i++) {
+            String genreKey = this.books.get(i).getGenre();
+            if (booksByGenre.containsKey(genreKey)) {
+                booksByGenre.put(genreKey, booksByGenre.get(genreKey) + 1);
+            }
+            else {
+                booksByGenre.put(this.books.get(i).getGenre(), 1);
+            }
+        }
+        this.booksByGenre = booksByGenre;
     }
 
     public int countBooks() {
@@ -40,6 +57,10 @@ public class Library {
             this.removeBook(book);
             borrower.borrowBook(book);
         }
+    }
+
+    public HashMap<String, Integer> getGenreHashMap() {
+        return this.booksByGenre;
     }
 
 }
